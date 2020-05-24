@@ -1,0 +1,17 @@
+{
+  "name": "my-fitness",
+  "displayName": "my-fitness",
+  "expo": {
+    "name": "my-fitness",
+    "slug": "expo-template-bare",
+    "version": "1.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
