@@ -1,9 +1,19 @@
 import React from 'react';
-import { View, Text } from 'react-native';
-import { getMetricMetaInfo } from '../utils/helpers';
-import Slider from './Slider';
+import { View, Text, TouchableOpacity } from 'react-native';
+import { getMetricMetaInfo, timeToString } from '../utils/helpers';
+import CustomSlider from './CustomSlider';
 import Stepper from './Stepper';
+import TextButton from './TextButton';
 import DateHeader from './DateHeader';
+import { Ionicons } from '@expo/vector-icons';
+
+function SubmitBtn({ onPress }) {
+  return (
+    <TouchableOpacity onPress={onPress}>
+      <Text>Submit</Text>
+    </TouchableOpacity>
+  );
+}
 
 export default class AddEntry extends React.Component {
   state = {
@@ -40,14 +50,54 @@ export default class AddEntry extends React.Component {
     });
   };
 
-  slide = (metric) => {
+  slide = (metric, value) => {
     this.setState(() => ({
       [metric]: value,
     }));
   };
 
+  submit = () => {
+    const key = timeToString();
+    const entry = this.state;
+
+    this.setState(() => ({
+      run: 0,
+      bike: 0,
+      swim: 0,
+      sleep: 0,
+      eat: 0,
+    }));
+
+    // update Redux
+
+    // navigate to home
+
+    // save to DB
+  };
+
+  reset = () => {
+    const key = timeToString();
+
+    // update Redux
+
+    // navigate to home
+
+    // save to DB
+  };
+
   render() {
     const metaInfo = getMetricMetaInfo();
+
+    if (this.props.alreadyLogged) {
+      return (
+        <View>
+          <Ionicons name="ios-happy" size={100} />
+          <Text>You already logged your information for today</Text>
+          <TextButton onPress={this.reset}>Reset</TextButton>
+        </View>
+      );
+    }
+
     return (
       <View>
         <DateHeader date={new Date().toLocaleDateString()} />
@@ -59,7 +109,7 @@ export default class AddEntry extends React.Component {
             <View key={key}>
               {getIcon()}
               {type === 'slider' ? (
-                <Slider
+                <CustomSlider
                   value={value}
                   onChange={(value) => this.slide(key, value)}
                   {...rest}
@@ -75,6 +125,8 @@ export default class AddEntry extends React.Component {
             </View>
           );
         })}
+
+        <SubmitBtn onPress={this.submit} />
       </View>
     );
   }
