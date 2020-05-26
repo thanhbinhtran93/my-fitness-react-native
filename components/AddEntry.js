@@ -6,6 +6,7 @@ import Stepper from './Stepper';
 import TextButton from './TextButton';
 import DateHeader from './DateHeader';
 import { Ionicons } from '@expo/vector-icons';
+import { submitEntry, removeEntry } from '../utils/api';
 
 function SubmitBtn({ onPress }) {
   return (
@@ -73,6 +74,7 @@ export default class AddEntry extends React.Component {
     // navigate to home
 
     // save to DB
+    submitEntry({ key, entry });
   };
 
   reset = () => {
@@ -83,6 +85,7 @@ export default class AddEntry extends React.Component {
     // navigate to home
 
     // save to DB
+    removeEntry(key);
   };
 
   render() {
