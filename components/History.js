@@ -67,11 +67,13 @@ class History extends Component {
     if (!ready) return <AppLoading />;
 
     return (
-      <UdaciFitnessCalendar
-        items={entries}
-        renderItem={this.renderItem}
-        renderEmptyDate={this.renderEmptyDate}
-      />
+      <View style={{ flex: 1 }}>
+        <UdaciFitnessCalendar
+          items={entries}
+          renderItem={this.renderItem}
+          renderEmptyDate={this.renderEmptyDate}
+        />
+      </View>
     );
   }
 }
