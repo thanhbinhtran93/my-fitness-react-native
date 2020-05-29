@@ -20,6 +20,7 @@ import { submitEntry, removeEntry } from '../utils/api';
 import { connect } from 'react-redux';
 import { addEntry } from '../actions';
 import { white, purple } from '../utils/colors';
+import { CommonActions } from '@react-navigation/native';
 
 function SubmitBtn({ onPress }) {
   return (
@@ -93,7 +94,7 @@ class AddEntry extends React.Component {
       eat: 0,
     }));
 
-    // navigate to home
+    this.toHome();
 
     // save to DB
     submitEntry({ key, entry });
@@ -108,10 +109,17 @@ class AddEntry extends React.Component {
       })
     );
 
-    // navigate to home
+    this.toHome();
 
-    // save to DB
     removeEntry(key);
+  };
+
+  toHome = () => {
+    this.props.navigation.dispatch(
+      CommonActions.goBack({
+        key: 'AddEntry',
+      })
+    );
   };
 
   render() {
