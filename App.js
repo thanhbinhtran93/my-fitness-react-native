@@ -9,6 +9,7 @@ import reducer from './reducers';
 import AddEntry from './components/AddEntry';
 import History from './components/History';
 import EntryDetail from './components/EntryDetail';
+import Live from './components/Live';
 import { NavigationContainer } from '@react-navigation/native';
 import { purple, white } from './utils/colors';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
@@ -57,6 +58,16 @@ const TabNav = () => (
         tabBarLabel: 'Add Entry',
         tabBarIcon: ({ tintColor }) => (
           <FontAwesome name="plus-square" size={30} color={tintColor} />
+        ),
+      }}
+    />
+    <Tab.Screen
+      name="Live"
+      component={Live}
+      options={{
+        tabBarLabel: 'Live',
+        tabBarIcon: ({ tintColor }) => (
+          <Ionicons name="ios-speedometer" size={30} color={tintColor} />
         ),
       }}
     />
