@@ -1,10 +1,15 @@
 {
-  "name": "my-fitness",
+  "name": "MyFitness",
   "displayName": "my-fitness",
   "expo": {
     "name": "my-fitness",
-    "slug": "expo-template-bare",
+    "slug": "my-fitness",
+    "description": "The best fitness tracker",
     "version": "1.0.0",
+    "icon": "https://w7.pngwing.com/pngs/616/431/png-transparent-black-signage-physical-fitness-fitness-centre-physical-exercise-computer-icons-fitness-icon-exercise-fitness-gym-fitness-text-sport.png",
+    "notification": {
+      "icon": "https://w7.pngwing.com/pngs/616/431/png-transparent-black-signage-physical-fitness-fitness-centre-physical-exercise-computer-icons-fitness-icon-exercise-fitness-gym-fitness-text-sport.png"
+    },
     "platforms": [
       "ios",
       "android",
@@ -12,6 +17,12 @@
     ],
     "assetBundlePatterns": [
       "**/*"
-    ]
+    ],
+    "ios": {
+      "bundleIdentifier": "org.myfitness.exp"
+    },
+    "android": {
+      "package": "org.myfitness.exp"
+    }
   }
 }
