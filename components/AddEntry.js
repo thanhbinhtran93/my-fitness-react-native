@@ -10,6 +10,8 @@ import {
   getMetricMetaInfo,
   timeToString,
   getDailyReminderValue,
+  clearLocalNotification,
+  setLocalNotification,
 } from '../utils/helpers';
 import CustomSlider from './CustomSlider';
 import Stepper from './Stepper';
@@ -98,6 +100,8 @@ class AddEntry extends React.Component {
 
     // save to DB
     submitEntry({ key, entry });
+
+    clearLocalNotification().then(setLocalNotification);
   };
 
   reset = () => {

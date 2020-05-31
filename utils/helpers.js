@@ -1,11 +1,16 @@
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
+import { View, StyleSheet, AsyncStorage } from 'react-native';
 import {
   FontAwesome,
   MaterialCommunityIcons,
   MaterialIcons,
 } from '@expo/vector-icons';
-import { white, red, orange, blue, lightPurp, pink, purple } from './colors';
+import { white, red, orange, blue, pink, purple } from './colors';
+import * as Permissions from 'expo-permissions';
+import * as Location from 'expo-location';
+import { Notifications } from 'expo';
+
+const NOTIFICATION_KEY = 'Fitness:notifications';
 
 export function isBetween(num, x, y) {
   if (num >= x && num <= y) {
@@ -144,4 +149,51 @@ export function getDailyReminderValue() {
   return {
     today: "👋 Don't forget to log your data today!",
   };
+}
+
+export function clearLocalNotification() {
+  return AsyncStorage.removeItem(NOTIFICATION_KEY).then(() =>
+    Notifications.cancelAllScheduledNotificationsAsync()
+  );
+}
+
+export function createNotification() {
+  return {
+    title: 'Log your stats!',
+    body: "👋 don't forget to log your stats for today!",
+    ios: {
+      sound: true,
+    },
+    android: {
+      sound: true,
+      priority: 'high',
+      sticky: false,
+      vibrate: true,
+    },
+  };
+}
+
+export function setLocalNotification() {
+  AsyncStorage.getItem(NOTIFICATION_KEY)
+    .then(JSON.parse)
+    .then((data) => {
+      if (data === null) {
+        Permissions.askAsync(Permissions.NOTIFICATIONS).then(({ status }) => {
+          if (status === 'granted') {
+            Notifications.cancelAllScheduledNotificationsAsync();
+            let tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            tomorrow.setHours(20);
+            tomorrow.setMinutes(0);
+
+            Notifications.scheduleLocalNotificationAsync(createNotification(), {
+              time: tomorrow,
+              repeat: 'day',
+            });
+
+            AsyncStorage.setItem(NOTIFICATION_KEY, JSON.stringify(true));
+          }
+        });
+      }
+    });
 }

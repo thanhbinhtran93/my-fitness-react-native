@@ -14,6 +14,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { purple, white } from './utils/colors';
 import { FontAwesome, Ionicons } from '@expo/vector-icons';
 import Constants from 'expo-constants';
+import { setLocalNotification } from './utils/helpers';
 
 function UStatusBar({ backgroundColor, ...props }) {
   return (
@@ -96,13 +97,19 @@ const MainNav = () => (
   </Stack.Navigator>
 );
 
-export default function App() {
-  return (
-    <Provider store={createStore(reducer)}>
-      <NavigationContainer>
-        <UStatusBar backgroundColor={purple} barStyle="light-content" />
-        <MainNav />
-      </NavigationContainer>
-    </Provider>
-  );
+export default class App extends React.Component {
+  componentDidMount() {
+    setLocalNotification();
+  }
+
+  render() {
+    return (
+      <Provider store={createStore(reducer)}>
+        <NavigationContainer>
+          <UStatusBar backgroundColor={purple} barStyle="light-content" />
+          <MainNav />
+        </NavigationContainer>
+      </Provider>
+    );
+  }
 }
